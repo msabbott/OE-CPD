@@ -155,8 +155,9 @@ CLASS OETools.cpd.Strategy.DefaultStrategy INHERITS AbstractStrategy:
         
         DEFINE BUFFER bttLine FOR ttLine.
         
-        /* Clear out ttLine temp-table */
-        /*EMPTY TEMP-TABLE ttLine.*/
+        /* If file has already been processed, then return false */
+        IF CAN-FIND(FIRST ttRawLine NO-LOCK
+                    WHERE ttRawLine.FileName = pcFileName) THEN RETURN FALSE.
         
         /* Open Input file */
         INPUT FROM VALUE(pcFileName).
