@@ -12,10 +12,14 @@
 USING Progress.Lang.*.
 USING OETools.cpd.Hash.AbstractHash.
 USING OETools.cpd.Reporter.AbstractReporter.
+USING OETools.cpd.File.FileList.
 
 ROUTINE-LEVEL ON ERROR UNDO, THROW.
 
 CLASS OETools.cpd.Strategy.AbstractStrategy: 
+    
+    {OETools\cpd\File\ttFile.i PROTECTED}
+    {OETools\cpd\File\dsFile.i PROTECTED}
 
 	DEFINE PROTECTED PROPERTY Hash AS OETools.cpd.Hash.AbstractHash NO-UNDO 
 	GET.
@@ -119,6 +123,23 @@ CLASS OETools.cpd.Strategy.AbstractStrategy:
         RETURN FALSE.
         
     END METHOD.
+
+	/*------------------------------------------------------------------------------
+	 Purpose:
+	 Notes:
+	------------------------------------------------------------------------------*/
+	METHOD PUBLIC VOID ProcessFileList( INPUT poFileList AS OETools.cpd.File.FileList ):
+		
+		/* Fetch data */
+		poFileList:FetchAll(OUTPUT DATASET dsFile).
+		
+		FOR EACH ttFile NO-LOCK:
+		    
+		    ProcessFile(INPUT ttFile.FileName).
+		    
+		END.
+
+	END METHOD.
 
 	/*------------------------------------------------------------------------------
 	 Purpose:
