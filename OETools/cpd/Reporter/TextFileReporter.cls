@@ -61,15 +61,15 @@ CLASS OETools.cpd.Reporter.TextFileReporter INHERITS AbstractReporter:
      Purpose:
      Notes:
     ------------------------------------------------------------------------------*/
-    METHOD PUBLIC OVERRIDE LOGICAL WriteBlock( INPUT FileNameOne AS CHARACTER, INPUT StartLineOne AS INTEGER, INPUT EndLineOne AS INTEGER, 
-                                               INPUT FileNameTwo AS CHARACTER, INPUT StartLineTwo AS INTEGER, INPUT EndLineTwo AS INTEGER,
-                                               INPUT CodeBlock   AS CHARACTER):
+    METHOD PUBLIC OVERRIDE LOGICAL WriteBlock( INPUT pcFileNameOne AS CHARACTER, INPUT piStartLineOne AS INTEGER, INPUT piEndLineOne AS INTEGER, 
+                                               INPUT pcFileNameTwo AS CHARACTER, INPUT piStartLineTwo AS INTEGER, INPUT piEndLineTwo AS INTEGER,
+                                               INPUT pcCodeBlock   AS CHARACTER):
         
-        PUT STREAM sOutput UNFORMATTED "File: " FileNameOne
-                        " Lines: " StartLineOne "-" EndLineOne SKIP
-                        "File: " FileNameTwo
-                        " Lines: " StartLineTwo "-" EndLineTwo SKIP
-                        CodeBlock SKIP(3).
+        PUT STREAM sOutput UNFORMATTED "File: " pcFileNameOne
+                        " Lines: " piStartLineOne "-" piEndLineOne SKIP
+                        "File: " pcFileNameTwo
+                        " Lines: " piStartLineTwo "-" piEndLineTwo SKIP
+                        pcCodeBlock SKIP(3).
 
     END METHOD.    
     

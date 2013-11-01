@@ -35,9 +35,9 @@ CLASS OETools.cpd.Hash.DefaultHash INHERITS AbstractHash:
 	 Purpose: Hashes data
 	 Notes:
 	------------------------------------------------------------------------------*/
-	METHOD PUBLIC OVERRIDE CHARACTER Hash( INPUT cData AS CHARACTER ):
+	METHOD PUBLIC OVERRIDE CHARACTER Hash( INPUT pcData AS CHARACTER ):
 
-        RETURN ENCODE(cData).
+        RETURN ENCODE(pcData).
 
     END METHOD.
 

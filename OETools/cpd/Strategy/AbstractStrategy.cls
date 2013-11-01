@@ -48,12 +48,12 @@ CLASS OETools.cpd.Strategy.AbstractStrategy:
 	 Purpose:
 	 Notes:
 	------------------------------------------------------------------------------*/
-	CONSTRUCTOR PUBLIC AbstractStrategy ( INPUT oHash AS OETools.cpd.Hash.AbstractHash, INPUT iLinesPerHash AS INTEGER ):
+	CONSTRUCTOR PUBLIC AbstractStrategy ( INPUT poHash AS OETools.cpd.Hash.AbstractHash, INPUT piLinesPerHash AS INTEGER ):
 	    
 		SUPER ().
 		
-		ASSIGN Hash = oHash
-		       LinesPerHash = iLinesPerHash.
+		ASSIGN Hash = poHash
+		       LinesPerHash = piLinesPerHash.
 		
 	END CONSTRUCTOR.
 
@@ -114,7 +114,7 @@ CLASS OETools.cpd.Strategy.AbstractStrategy:
      Purpose: Processes an individual file
      Notes:
     ------------------------------------------------------------------------------*/
-    METHOD PUBLIC LOGICAL ProcessFile( INPUT cFileName AS CHARACTER ):
+    METHOD PUBLIC LOGICAL ProcessFile( INPUT pcFileName AS CHARACTER ):
         
         RETURN FALSE.
         
@@ -124,7 +124,7 @@ CLASS OETools.cpd.Strategy.AbstractStrategy:
 	 Purpose:
 	 Notes:
 	------------------------------------------------------------------------------*/
-	METHOD PUBLIC LOGICAL Report( INPUT oReporter AS OETools.cpd.Reporter.AbstractReporter ):
+	METHOD PUBLIC LOGICAL Report( INPUT poReporter AS OETools.cpd.Reporter.AbstractReporter ):
         
         RETURN FALSE.
 

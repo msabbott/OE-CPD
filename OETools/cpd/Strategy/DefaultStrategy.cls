@@ -53,9 +53,9 @@ CLASS OETools.cpd.Strategy.DefaultStrategy INHERITS AbstractStrategy:
 	 Purpose:
 	 Notes:
 	------------------------------------------------------------------------------*/
-	CONSTRUCTOR PUBLIC DefaultStrategy ( INPUT oHash AS OETools.cpd.Hash.AbstractHash, INPUT iLinesPerHash AS INTEGER ):
+	CONSTRUCTOR PUBLIC DefaultStrategy ( INPUT poHash AS OETools.cpd.Hash.AbstractHash, INPUT piLinesPerHash AS INTEGER ):
 	    
-		SUPER (oHash, iLinesPerHash).
+		SUPER (poHash, piLinesPerHash).
 		
 	END CONSTRUCTOR.
 
@@ -145,7 +145,7 @@ CLASS OETools.cpd.Strategy.DefaultStrategy INHERITS AbstractStrategy:
      Purpose: Processes an individual file
      Notes:
     ------------------------------------------------------------------------------*/
-    METHOD PUBLIC OVERRIDE LOGICAL ProcessFile( INPUT cFileName AS CHARACTER ):
+    METHOD PUBLIC OVERRIDE LOGICAL ProcessFile( INPUT pcFileName AS CHARACTER ):
         
         DEFINE VARIABLE cLine       AS CHARACTER NO-UNDO.
         DEFINE VARIABLE iLineNumber AS INTEGER   NO-UNDO INITIAL 0.
@@ -159,7 +159,7 @@ CLASS OETools.cpd.Strategy.DefaultStrategy INHERITS AbstractStrategy:
         /*EMPTY TEMP-TABLE ttLine.*/
         
         /* Open Input file */
-        INPUT FROM VALUE(cFileName).
+        INPUT FROM VALUE(pcFileName).
         
         /* Read every line in the file, trimming and removing spaces, as we go */
         FileLoop:
@@ -172,7 +172,7 @@ CLASS OETools.cpd.Strategy.DefaultStrategy INHERITS AbstractStrategy:
             /* Create ttRawLine record */
             CREATE ttRawLine.
             
-            ASSIGN ttRawLine.FileName   = cFileName
+            ASSIGN ttRawLine.FileName   = pcFileName
                    ttRawLine.LineNumber = iLineNumber
                    ttRawLine.Data       = cLine.
             
@@ -189,7 +189,7 @@ CLASS OETools.cpd.Strategy.DefaultStrategy INHERITS AbstractStrategy:
             /* Create record */
             CREATE ttLine.
             
-            ASSIGN ttLine.FileName   = cFileName
+            ASSIGN ttLine.FileName   = pcFileName
                    ttLine.LineNumber = iLineNumber
                    ttLine.Data       = cLine.
             
@@ -200,7 +200,7 @@ CLASS OETools.cpd.Strategy.DefaultStrategy INHERITS AbstractStrategy:
         
         /* Loop through the data, generating a hash for each "LinesPerHash" number of lines */
         FOR EACH ttLine NO-LOCK
-           WHERE ttLine.FileName = cFileName
+           WHERE ttLine.FileName = pcFileName
               BY ttLine.FileName
               BY ttLine.LineNumber:
                   
@@ -211,7 +211,7 @@ CLASS OETools.cpd.Strategy.DefaultStrategy INHERITS AbstractStrategy:
             DO iInnerLoop = 1 TO LinesPerHash - 1:
                 
                 FIND FIRST bttLine
-                     WHERE bttLine.FileName = cFileName
+                     WHERE bttLine.FileName   = pcFileName
                        AND bttLine.LineNumber = ttLine.LineNumber + iInnerLoop
                            NO-LOCK NO-ERROR.
                            
@@ -241,19 +241,19 @@ CLASS OETools.cpd.Strategy.DefaultStrategy INHERITS AbstractStrategy:
      Purpose:
      Notes:
     ------------------------------------------------------------------------------*/
-    METHOD PUBLIC OVERRIDE LOGICAL Report( INPUT oReporter AS OETools.cpd.Reporter.AbstractReporter ):
+    METHOD PUBLIC OVERRIDE LOGICAL Report( INPUT poReporter AS OETools.cpd.Reporter.AbstractReporter ):
         
-        oReporter:Initialise().
+        poReporter:Initialise().
         
         FOR EACH ttBlock NO-LOCK:
                        
-            oReporter:WriteBlock(ttBlock.FileNameOne, ttBlock.StartLineOne, ttBlock.EndLineOne,
-                                 ttBlock.FileNameTwo, ttBlock.StartLineTwo, ttBlock.EndLineTwo,
-                                 ttBlock.Data).
+            poReporter:WriteBlock(ttBlock.FileNameOne, ttBlock.StartLineOne, ttBlock.EndLineOne,
+                                  ttBlock.FileNameTwo, ttBlock.StartLineTwo, ttBlock.EndLineTwo,
+                                  ttBlock.Data).
             
         END.
         
-        oReporter:ShutDown().
+        poReporter:ShutDown().
 
     END METHOD.
 	

@@ -32,6 +32,6 @@ CLASS OETools.cpd.Hash.AbstractHash ABSTRACT:
 	 Purpose: Hashes data
 	 Notes:
 	------------------------------------------------------------------------------*/
-	METHOD PUBLIC ABSTRACT CHARACTER Hash( INPUT cData AS CHARACTER ).
+	METHOD PUBLIC ABSTRACT CHARACTER Hash( INPUT pcData AS CHARACTER ).
 
 END CLASS.
