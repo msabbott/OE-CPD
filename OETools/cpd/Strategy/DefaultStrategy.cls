@@ -81,10 +81,6 @@ CLASS OETools.cpd.Strategy.DefaultStrategy INHERITS AbstractStrategy:
 		
 	END CONSTRUCTOR.
 
-	DESTRUCTOR PUBLIC DefaultStrategy ( ):
-
-	END DESTRUCTOR.
-
     /*------------------------------------------------------------------------------
      Purpose:
      Notes:

@@ -43,10 +43,6 @@ CLASS OETools.cpd.File.FileScanner:
 		       FileList           = poFileList.
 		
 	END CONSTRUCTOR.
-	
-	DESTRUCTOR PUBLIC FileScanner ( ):
-
-	END DESTRUCTOR.
 
 	/*------------------------------------------------------------------------------
 	 Purpose:

@@ -33,10 +33,6 @@ CLASS OETools.cpd.Reporter.TextFileReporter INHERITS AbstractReporter:
 		
 	END CONSTRUCTOR.
 
-	DESTRUCTOR PUBLIC TextFileReporter ( ):
-
-	END DESTRUCTOR.
-
     /*------------------------------------------------------------------------------
      Purpose:
      Notes:

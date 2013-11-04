@@ -23,12 +23,7 @@ CLASS OETools.cpd.Hash.DefaultHash INHERITS AbstractHash:
 	CONSTRUCTOR PUBLIC DefaultHash (  ):
 		SUPER ().
 		
-	END CONSTRUCTOR.
-
-	DESTRUCTOR PUBLIC DefaultHash ( ):
-
-	END DESTRUCTOR.
-	
+	END CONSTRUCTOR.	
 	
 
 	/*------------------------------------------------------------------------------

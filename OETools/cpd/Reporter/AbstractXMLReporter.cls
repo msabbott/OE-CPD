@@ -40,10 +40,6 @@ CLASS OETools.cpd.Reporter.AbstractXMLReporter INHERITS AbstractReporter:
         
     END CONSTRUCTOR.
 
-	DESTRUCTOR PUBLIC AbstractXMLReporter ( ):
-
-	END DESTRUCTOR.
-
     /*------------------------------------------------------------------------------
      Purpose:
      Notes:

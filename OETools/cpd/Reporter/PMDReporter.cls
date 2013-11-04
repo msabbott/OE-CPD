@@ -28,10 +28,6 @@ CLASS OETools.cpd.Reporter.PMDReporter INHERITS AbstractXMLReporter:
         
     END CONSTRUCTOR.
 
-	DESTRUCTOR PUBLIC PMDReporter ( ):
-
-	END DESTRUCTOR.
-
     /*------------------------------------------------------------------------------
      Purpose:
      Notes:

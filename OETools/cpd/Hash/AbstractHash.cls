@@ -24,10 +24,6 @@ CLASS OETools.cpd.Hash.AbstractHash ABSTRACT:
         
     END CONSTRUCTOR.
 
-    DESTRUCTOR PUBLIC AbstractHash ( ):
-
-    END DESTRUCTOR.
-
 	/*------------------------------------------------------------------------------
 	 Purpose: Hashes data
 	 Notes:

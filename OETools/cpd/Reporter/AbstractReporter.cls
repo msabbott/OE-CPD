@@ -24,10 +24,6 @@ CLASS OETools.cpd.Reporter.AbstractReporter:
         
     END CONSTRUCTOR.
 
-    DESTRUCTOR PUBLIC AbstractReporter ( ):
-
-    END DESTRUCTOR.
-
     /*------------------------------------------------------------------------------
      Purpose:
      Notes:

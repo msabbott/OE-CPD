@@ -64,10 +64,6 @@ CLASS OETools.cpd.Strategy.AbstractStrategy:
 		
 	END CONSTRUCTOR.
 
-	DESTRUCTOR PUBLIC AbstractStrategy ( ):
-
-	END DESTRUCTOR.
-
 	/*------------------------------------------------------------------------------
 	 Purpose:
 	 Notes:

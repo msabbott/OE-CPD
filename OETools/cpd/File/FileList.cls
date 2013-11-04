@@ -27,10 +27,6 @@ CLASS OETools.cpd.File.FileList:
 		
 	END CONSTRUCTOR.
 
-	DESTRUCTOR PUBLIC FileList ( ):
-
-	END DESTRUCTOR.
-
     /*------------------------------------------------------------------------------
      Purpose:
      Notes:
