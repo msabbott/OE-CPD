@@ -57,17 +57,17 @@ CLASS OETools.cpd.Strategy.DefaultStrategy INHERITS AbstractStrategy:
 	 Purpose:
 	 Notes:
 	------------------------------------------------------------------------------*/
-	CONSTRUCTOR PUBLIC DefaultStrategy ( INPUT piLinesPerHash AS INTEGER ):
+	CONSTRUCTOR PUBLIC DefaultStrategy ( INPUT piLinesPerCodeBlock AS INTEGER ):
 	    
-	    SUPER( INPUT piLinesPerHash ).
+	    SUPER( INPUT piLinesPerCodeBlock ).
 	    
 	    ASSIGN Hash = NEW OETools.cpd.Hash.DefaultHash().
 	    
 	END CONSTRUCTOR.
 		
-	CONSTRUCTOR PUBLIC DefaultStrategy ( INPUT poHash AS OETools.cpd.Hash.AbstractHash, INPUT piLinesPerHash AS INTEGER ):
+	CONSTRUCTOR PUBLIC DefaultStrategy ( INPUT poHash AS OETools.cpd.Hash.AbstractHash, INPUT piLinesPerCodeBlock AS INTEGER ):
 	    
-		SUPER (piLinesPerHash).
+		SUPER (piLinesPerCodeBlock).
 		
 		ASSIGN Hash = poHash.
 		
@@ -213,7 +213,7 @@ CLASS OETools.cpd.Strategy.DefaultStrategy INHERITS AbstractStrategy:
         /* Close input file */
         INPUT CLOSE.           
         
-        /* Loop through the data, generating a hash for each "LinesPerHash" number of lines */
+        /* Loop through the data, generating a hash for each "LinesPerCodeBlock" number of lines */
         FOR EACH ttLine NO-LOCK
            WHERE ttLine.FileName = pcFileName
               BY ttLine.FileName
@@ -222,8 +222,8 @@ CLASS OETools.cpd.Strategy.DefaultStrategy INHERITS AbstractStrategy:
             ASSIGN cData    = ttLine.Data
                    iMaxLine = ttLine.LineNumber.
             
-            /* Find the next "LinesPerHash" after this line */
-            DO iInnerLoop = 1 TO LinesPerHash - 1:
+            /* Find the next "LinesPerCodeBlock" after this line */
+            DO iInnerLoop = 1 TO LinesPerCodeBlock - 1:
                 
                 FIND FIRST bttLine
                      WHERE bttLine.FileName   = pcFileName

@@ -21,7 +21,7 @@ CLASS OETools.cpd.Strategy.AbstractStrategy:
     {OETools\cpd\File\ttFile.i PROTECTED}
     {OETools\cpd\File\dsFile.i PROTECTED}
 
-	DEFINE PROTECTED PROPERTY LinesPerHash AS INTEGER NO-UNDO 
+	DEFINE PROTECTED PROPERTY LinesPerCodeBlock AS INTEGER NO-UNDO 
 	GET.
 	SET. 
 	
@@ -48,11 +48,11 @@ CLASS OETools.cpd.Strategy.AbstractStrategy:
 	 Purpose:
 	 Notes:
 	------------------------------------------------------------------------------*/
-	CONSTRUCTOR PUBLIC AbstractStrategy ( INPUT piLinesPerHash AS INTEGER ):
+	CONSTRUCTOR PUBLIC AbstractStrategy ( INPUT piLinesPerCodeBlock AS INTEGER ):
 	    
 		SUPER ().
 		
-		ASSIGN LinesPerHash = piLinesPerHash.
+		ASSIGN LinesPerCodeBlock = piLinesPerCodeBlock.
 		
 	END CONSTRUCTOR.
 
