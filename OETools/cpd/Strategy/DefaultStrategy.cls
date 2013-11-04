@@ -57,11 +57,19 @@ CLASS OETools.cpd.Strategy.DefaultStrategy INHERITS AbstractStrategy:
 	 Purpose:
 	 Notes:
 	------------------------------------------------------------------------------*/
+    CONSTRUCTOR PUBLIC DefaultStrategy ( ):
+        
+        SUPER( ).
+        
+        CreateDefaultHash().
+        
+    END CONSTRUCTOR.
+    
 	CONSTRUCTOR PUBLIC DefaultStrategy ( INPUT piLinesPerCodeBlock AS INTEGER ):
 	    
 	    SUPER( INPUT piLinesPerCodeBlock ).
 	    
-	    ASSIGN Hash = NEW OETools.cpd.Hash.DefaultHash().
+	    CreateDefaultHash().
 	    
 	END CONSTRUCTOR.
 		
@@ -154,6 +162,17 @@ CLASS OETools.cpd.Strategy.DefaultStrategy INHERITS AbstractStrategy:
         END.
 
     END METHOD.
+
+	/*------------------------------------------------------------------------------
+	 Purpose:
+	 Notes:
+	------------------------------------------------------------------------------*/
+
+	METHOD PROTECTED VOID CreateDefaultHash(  ):
+		
+		ASSIGN Hash = NEW OETools.cpd.Hash.DefaultHash().
+
+	END METHOD.
 
     /*------------------------------------------------------------------------------
      Purpose: Processes an individual file
