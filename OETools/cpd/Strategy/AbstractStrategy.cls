@@ -48,6 +48,14 @@ CLASS OETools.cpd.Strategy.AbstractStrategy:
 	 Purpose:
 	 Notes:
 	------------------------------------------------------------------------------*/
+	CONSTRUCTOR PUBLIC AbstractStrategy (  ):
+	    
+	    SUPER ().
+	    
+	    ASSIGN LinesPerCodeBlock = 5. /* Default number */
+	    
+	END CONSTRUCTOR.
+	
 	CONSTRUCTOR PUBLIC AbstractStrategy ( INPUT piLinesPerCodeBlock AS INTEGER ):
 	    
 		SUPER ().
