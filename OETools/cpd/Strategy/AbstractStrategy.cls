@@ -21,10 +21,6 @@ CLASS OETools.cpd.Strategy.AbstractStrategy:
     {OETools\cpd\File\ttFile.i PROTECTED}
     {OETools\cpd\File\dsFile.i PROTECTED}
 
-	DEFINE PROTECTED PROPERTY Hash AS OETools.cpd.Hash.AbstractHash NO-UNDO 
-	GET.
-	SET. 
-
 	DEFINE PROTECTED PROPERTY LinesPerHash AS INTEGER NO-UNDO 
 	GET.
 	SET. 
@@ -52,12 +48,11 @@ CLASS OETools.cpd.Strategy.AbstractStrategy:
 	 Purpose:
 	 Notes:
 	------------------------------------------------------------------------------*/
-	CONSTRUCTOR PUBLIC AbstractStrategy ( INPUT poHash AS OETools.cpd.Hash.AbstractHash, INPUT piLinesPerHash AS INTEGER ):
+	CONSTRUCTOR PUBLIC AbstractStrategy ( INPUT piLinesPerHash AS INTEGER ):
 	    
 		SUPER ().
 		
-		ASSIGN Hash = poHash
-		       LinesPerHash = piLinesPerHash.
+		ASSIGN LinesPerHash = piLinesPerHash.
 		
 	END CONSTRUCTOR.
 

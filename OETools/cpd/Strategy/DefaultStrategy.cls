@@ -12,6 +12,7 @@
 USING Progress.Lang.*.
 USING OETools.cpd.Strategy.AbstractStrategy.
 USING OETools.cpd.Hash.AbstractHash.
+USING OETools.cpd.Hash.DefaultHash.
 USING OETools.cpd.Reporter.AbstractReporter.
 
 ROUTINE-LEVEL ON ERROR UNDO, THROW.
@@ -48,6 +49,9 @@ CLASS OETools.cpd.Strategy.DefaultStrategy INHERITS AbstractStrategy:
             INDEX HashKey                   HashData ASCENDING
             INDEX RepKey                    Reported ASCENDING.
 
+    DEFINE PROTECTED PROPERTY Hash AS OETools.cpd.Hash.AbstractHash NO-UNDO 
+    GET.
+    SET. 
 
 	/*------------------------------------------------------------------------------
 	 Purpose:
@@ -55,7 +59,9 @@ CLASS OETools.cpd.Strategy.DefaultStrategy INHERITS AbstractStrategy:
 	------------------------------------------------------------------------------*/
 	CONSTRUCTOR PUBLIC DefaultStrategy ( INPUT poHash AS OETools.cpd.Hash.AbstractHash, INPUT piLinesPerHash AS INTEGER ):
 	    
-		SUPER (poHash, piLinesPerHash).
+		SUPER (piLinesPerHash).
+		
+		ASSIGN Hash = poHash.
 		
 	END CONSTRUCTOR.
 
