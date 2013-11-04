@@ -4,7 +4,7 @@
     Purpose     : 
     Syntax      : 
     Description : Defines an Abstract detection strategy
-    Author(s)   : mabbott
+    Author(s)   : Mark Abbott
     Created     : Thu Oct 31 15:43:24 GMT 2013
     Notes       : 
   ----------------------------------------------------------------------*/

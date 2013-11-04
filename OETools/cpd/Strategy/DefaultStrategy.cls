@@ -4,7 +4,7 @@
     Purpose     : 
     Syntax      : 
     Description : Define strategy for processing data using a default strategy
-    Author(s)   : mabbott
+    Author(s)   : Mark Abbott
     Created     : Thu Oct 31 15:44:36 GMT 2013
     Notes       : 
   ----------------------------------------------------------------------*/

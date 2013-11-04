@@ -4,7 +4,7 @@
     Purpose     : 
     Syntax      : 
     Description : 
-    Author(s)   : mabbott
+    Author(s)   : Mark Abbott
     Created     : Fri Nov 01 11:10:30 GMT 2013
     Notes       : 
   ----------------------------------------------------------------------*/

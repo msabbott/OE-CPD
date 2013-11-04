@@ -4,7 +4,7 @@
     Purpose     : 
     Syntax      : 
     Description : Defines Abstract class for Hashes
-    Author(s)   : mabbott
+    Author(s)   : Mark Abbott
     Created     : Thu Oct 31 15:49:16 GMT 2013
     Notes       : 
   ----------------------------------------------------------------------*/
