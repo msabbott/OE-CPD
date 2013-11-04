@@ -57,6 +57,14 @@ CLASS OETools.cpd.Strategy.DefaultStrategy INHERITS AbstractStrategy:
 	 Purpose:
 	 Notes:
 	------------------------------------------------------------------------------*/
+	CONSTRUCTOR PUBLIC DefaultStrategy ( INPUT piLinesPerHash AS INTEGER ):
+	    
+	    SUPER( INPUT piLinesPerHash ).
+	    
+	    ASSIGN Hash = NEW OETools.cpd.Hash.DefaultHash().
+	    
+	END CONSTRUCTOR.
+		
 	CONSTRUCTOR PUBLIC DefaultStrategy ( INPUT poHash AS OETools.cpd.Hash.AbstractHash, INPUT piLinesPerHash AS INTEGER ):
 	    
 		SUPER (piLinesPerHash).
