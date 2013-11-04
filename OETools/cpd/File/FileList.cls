@@ -18,12 +18,19 @@ CLASS OETools.cpd.File.FileList:
     {OETools\cpd\File\ttFile.i PROTECTED}
     {OETools\cpd\File\dsFile.i PROTECTED}
     
+	DEFINE PUBLIC PROPERTY Scanner AS OETools.cpd.File.FileScanner NO-UNDO 
+	GET.
+	SET. 
+
 	/*------------------------------------------------------------------------------
 	 Purpose:
 	 Notes:
 	------------------------------------------------------------------------------*/
 	CONSTRUCTOR PUBLIC FileList (  ):
 		SUPER ().
+		
+		/* Create file scanner object */
+		ASSIGN Scanner = NEW OETools.cpd.File.FileScanner(THIS-OBJECT).
 		
 	END CONSTRUCTOR.
 
