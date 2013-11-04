@@ -14,6 +14,8 @@ Installation & Usage
 
 At present, there is no offical documentation or usage instructions. This will follow, with examples in due course.
 
+For the moment, please see the file "example.p", in order to view a well-documented example of how to use the tool.
+
 Requirements
 ============
 
