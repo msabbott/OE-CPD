@@ -13,7 +13,7 @@ USING Progress.Lang.*.
 
 ROUTINE-LEVEL ON ERROR UNDO, THROW.
 
-CLASS OETools.cpd.Hash.AbstractHash ABSTRACT: 
+CLASS OETools.cpd.Hash.AbstractHash : 
     /*------------------------------------------------------------------------------
      Purpose:
      Notes:
@@ -28,6 +28,10 @@ CLASS OETools.cpd.Hash.AbstractHash ABSTRACT:
 	 Purpose: Hashes data
 	 Notes:
 	------------------------------------------------------------------------------*/
-	METHOD PUBLIC ABSTRACT CHARACTER Hash( INPUT pcData AS CHARACTER ).
+	METHOD PUBLIC CHARACTER Hash( INPUT pcData AS CHARACTER ).
+	
+	   RETURN ?.
+	
+	END METHOD.
 
 END CLASS.

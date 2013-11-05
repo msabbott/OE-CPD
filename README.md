@@ -19,5 +19,12 @@ For the moment, please see the file "example.p", in order to view a well-documen
 Requirements
 ============
 
-This code has been written using OO-ABL in OpenEdge 11.2 - it has not been tested in any other versions, if you attempt to run it in any other version, then please get in contact and we can share experiences (good or bad!)
+This code has been written using OO-ABL in OpenEdge 11.2.
+
+It has been successfully tested in the following OpenEdge version.
+- OpenEdge 11.2
+- OpenEdge 10.2A
+
+Outside of this list, it has not been tested in any other versions. 
+If you attempt to run it in any other version, then please get in contact and we can share experiences (good or bad!)
 
