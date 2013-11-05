@@ -16,8 +16,6 @@ ROUTINE-LEVEL ON ERROR UNDO, THROW.
 
 CLASS OETools.cpd.Reporter.AbstractXMLReporter INHERITS AbstractReporter:  
     
-    DEFINE STREAM sOutput.
-
     /* Filename for where the XML document should be saved */    
     DEFINE PUBLIC PROPERTY FileName AS CHARACTER NO-UNDO 
     GET.
