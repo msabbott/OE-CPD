@@ -17,19 +17,22 @@ ROUTINE-LEVEL ON ERROR UNDO, THROW.
 CLASS OETools.cpd.Reporter.AbstractXMLReporter INHERITS AbstractReporter:  
     
     DEFINE STREAM sOutput.
-    
+
+    /* Filename for where the XML document should be saved */    
     DEFINE PUBLIC PROPERTY FileName AS CHARACTER NO-UNDO 
     GET.
     SET. 
 
+    /* SaxWriter property used to write XML document */
 	DEFINE PROTECTED PROPERTY SaxWriter AS HANDLE NO-UNDO 
 	GET.
 	SET. 
 	
+	/* Holds the root element for the XML document */
 	DEFINE PROTECTED VARIABLE RootElement AS CHARACTER NO-UNDO INITIAL "report".
     
 	/*------------------------------------------------------------------------------
-	 Purpose:
+	 Purpose: Default class contrstructor
 	 Notes:
 	------------------------------------------------------------------------------*/
 		
@@ -41,7 +44,7 @@ CLASS OETools.cpd.Reporter.AbstractXMLReporter INHERITS AbstractReporter:
     END CONSTRUCTOR.
 
     /*------------------------------------------------------------------------------
-     Purpose:
+     Purpose: Initialises XML document and creates root node
      Notes:
     ------------------------------------------------------------------------------*/
     METHOD PUBLIC OVERRIDE LOGICAL Initialise(  ):
@@ -55,7 +58,7 @@ CLASS OETools.cpd.Reporter.AbstractXMLReporter INHERITS AbstractReporter:
     END METHOD.
 
     /*------------------------------------------------------------------------------
-     Purpose:
+     Purpose: Closes root node, and ends XML document
      Notes:
     ------------------------------------------------------------------------------*/
     METHOD PUBLIC OVERRIDE LOGICAL Shutdown(  ):

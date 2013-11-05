@@ -18,12 +18,13 @@ CLASS OETools.cpd.File.FileList:
     {OETools\cpd\File\ttFile.i PROTECTED}
     {OETools\cpd\File\dsFile.i PROTECTED}
     
+    /* Holds FileScanner object, linked to this FileList object */
 	DEFINE PUBLIC PROPERTY Scanner AS OETools.cpd.File.FileScanner NO-UNDO 
 	GET.
 	SET. 
 
 	/*------------------------------------------------------------------------------
-	 Purpose:
+	 Purpose: Default contructor
 	 Notes:
 	------------------------------------------------------------------------------*/
 	CONSTRUCTOR PUBLIC FileList (  ):
@@ -35,7 +36,7 @@ CLASS OETools.cpd.File.FileList:
 	END CONSTRUCTOR.
 
     /*------------------------------------------------------------------------------
-     Purpose:
+     Purpose: Adds a single file to the list of files
      Notes:
     ------------------------------------------------------------------------------*/
     METHOD PUBLIC VOID AddFile( INPUT pcFileName AS CHARACTER ):
@@ -53,7 +54,7 @@ CLASS OETools.cpd.File.FileList:
     END METHOD.
 
 	/*------------------------------------------------------------------------------
-	 Purpose:
+	 Purpose: Fetches entire file list as a dataset.
 	 Notes:
 	------------------------------------------------------------------------------*/
 	METHOD PUBLIC VOID FetchAll( OUTPUT DATASET dsFile ):

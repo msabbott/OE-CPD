@@ -16,22 +16,24 @@ ROUTINE-LEVEL ON ERROR UNDO, THROW.
 
 CLASS OETools.cpd.File.FileScanner:
     
-    
+    /* Defines maximum depth directory scan should go to */
 	DEFINE PUBLIC PROPERTY MaxRecurseLevel AS INTEGER INITIAL ? NO-UNDO 
 	GET.
 	SET. 
 
+    /* Defines whether Directories should be recursed into */
 	DEFINE PUBLIC PROPERTY RecurseDirectories AS LOGICAL INITIAL TRUE NO-UNDO 
 	GET.
 	SET. 
 	
+	/* Holds reference to the FileList to populate with data */
 	DEFINE PROTECTED PROPERTY FileList AS OETools.cpd.File.FileList NO-UNDO
     GET.
     SET. 
 	
 
 	/*------------------------------------------------------------------------------
-	 Purpose:
+	 Purpose: Default constructor. FileList will be populated with contents of directory
 	 Notes:
 	------------------------------------------------------------------------------*/
 	CONSTRUCTOR PUBLIC FileScanner ( INPUT poFileList AS OETools.cpd.File.FileList ):
@@ -45,10 +47,9 @@ CLASS OETools.cpd.File.FileScanner:
 	END CONSTRUCTOR.
 
 	/*------------------------------------------------------------------------------
-	 Purpose:
+	 Purpose: Scans the provided directory for files, up to the maximum recursion left.
 	 Notes:
 	------------------------------------------------------------------------------*/
-
 	METHOD PROTECTED LOGICAL ScanAndRecurse( INPUT pcDirectory AS CHARACTER, INPUT pcPattern AS CHARACTER, INPUT piRecurseLevel AS INTEGER ):
 	    
 	    DEFINE VARIABLE cLine       AS CHARACTER NO-UNDO.
@@ -108,8 +109,8 @@ CLASS OETools.cpd.File.FileScanner:
 	END METHOD.
 
     /*------------------------------------------------------------------------------
-     Purpose:
-     Notes:
+     Purpose: Scans a directory with the provided file name pattern
+     Notes: pcPattern parameter should be a statement that can be used by MATCHES keyword.
     ------------------------------------------------------------------------------*/
     METHOD PUBLIC LOGICAL ScanDirectory( INPUT pcDirectory AS CHARACTER, INPUT pcPattern AS CHARACTER ):
         

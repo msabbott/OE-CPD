@@ -16,14 +16,16 @@ ROUTINE-LEVEL ON ERROR UNDO, THROW.
 
 CLASS OETools.cpd.Reporter.TextFileReporter INHERITS AbstractReporter: 
     
+    /* Stream used to save report through */
     DEFINE STREAM sOutput.
     
+    /* File name where report will be stored */
 	DEFINE PUBLIC PROPERTY FileName AS CHARACTER NO-UNDO 
 	GET.
 	SET. 
 
 	/*------------------------------------------------------------------------------
-	 Purpose:
+	 Purpose: Default Class Constructor
 	 Notes:
 	------------------------------------------------------------------------------*/
 	CONSTRUCTOR PUBLIC TextFileReporter ( INPUT cFileName AS CHARACTER ):
@@ -34,7 +36,7 @@ CLASS OETools.cpd.Reporter.TextFileReporter INHERITS AbstractReporter:
 	END CONSTRUCTOR.
 
     /*------------------------------------------------------------------------------
-     Purpose:
+     Purpose: Initialise output document
      Notes:
     ------------------------------------------------------------------------------*/
     METHOD PUBLIC OVERRIDE LOGICAL Initialise(  ):
@@ -44,7 +46,7 @@ CLASS OETools.cpd.Reporter.TextFileReporter INHERITS AbstractReporter:
     END METHOD.
 
 	/*------------------------------------------------------------------------------
-	 Purpose:
+	 Purpose: Shutdown output document
 	 Notes:
 	------------------------------------------------------------------------------*/
 	METHOD PUBLIC OVERRIDE LOGICAL Shutdown(  ):
@@ -54,7 +56,7 @@ CLASS OETools.cpd.Reporter.TextFileReporter INHERITS AbstractReporter:
 	END METHOD.    
 
     /*------------------------------------------------------------------------------
-     Purpose:
+     Purpose: Write code block to report document
      Notes:
     ------------------------------------------------------------------------------*/
     METHOD PUBLIC OVERRIDE LOGICAL WriteBlock( INPUT pcFileNameOne AS CHARACTER, INPUT piStartLineOne AS INTEGER, INPUT piEndLineOne AS INTEGER, 

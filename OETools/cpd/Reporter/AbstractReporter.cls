@@ -16,7 +16,7 @@ ROUTINE-LEVEL ON ERROR UNDO, THROW.
 CLASS OETools.cpd.Reporter.AbstractReporter:  
     
     /*------------------------------------------------------------------------------
-     Purpose:
+     Purpose: Default class contrstructor
      Notes:
     ------------------------------------------------------------------------------*/
     CONSTRUCTOR PUBLIC AbstractReporter (  ):
@@ -25,7 +25,7 @@ CLASS OETools.cpd.Reporter.AbstractReporter:
     END CONSTRUCTOR.
 
     /*------------------------------------------------------------------------------
-     Purpose:
+     Purpose: Initialises report document
      Notes:
     ------------------------------------------------------------------------------*/
     METHOD PUBLIC LOGICAL Initialise(  ):
@@ -35,7 +35,7 @@ CLASS OETools.cpd.Reporter.AbstractReporter:
     END METHOD.
 
     /*------------------------------------------------------------------------------
-     Purpose:
+     Purpose: Shuts down report document
      Notes:
     ------------------------------------------------------------------------------*/
     METHOD PUBLIC LOGICAL Shutdown(  ):
@@ -45,7 +45,7 @@ CLASS OETools.cpd.Reporter.AbstractReporter:
     END METHOD.    
 
 	/*------------------------------------------------------------------------------
-	 Purpose:
+	 Purpose: Writes a single code block to the report document
 	 Notes:
 	------------------------------------------------------------------------------*/
 	METHOD PUBLIC LOGICAL WriteBlock( INPUT pcFileNameOne AS CHARACTER, INPUT piStartLineOne AS INTEGER, INPUT piEndLineOne AS INTEGER, 

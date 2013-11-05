@@ -21,10 +21,12 @@ CLASS OETools.cpd.Strategy.AbstractStrategy:
     {OETools\cpd\File\ttFile.i PROTECTED}
     {OETools\cpd\File\dsFile.i PROTECTED}
 
+    /* Defines number of lines to group into one scanned code block */
 	DEFINE PROTECTED PROPERTY LinesPerCodeBlock AS INTEGER NO-UNDO 
 	GET.
 	SET. 
 	
+	/* Defines two similar code blocks */
 	DEFINE PROTECTED TEMP-TABLE ttBlock NO-UNDO
 	   
 	   FIELD FileNameOne  AS CHARACTER
@@ -45,7 +47,7 @@ CLASS OETools.cpd.Strategy.AbstractStrategy:
                                        EndLineTwo   ASCENDING.
 
 	/*------------------------------------------------------------------------------
-	 Purpose:
+	 Purpose: Default Class Constructor
 	 Notes:
 	------------------------------------------------------------------------------*/
 	CONSTRUCTOR PUBLIC AbstractStrategy (  ):
@@ -56,6 +58,10 @@ CLASS OETools.cpd.Strategy.AbstractStrategy:
 	    
 	END CONSTRUCTOR.
 	
+	/*------------------------------------------------------------------------------
+     Purpose: Class Constructor which allows creator to set lines per code at creation time
+     Notes:
+    ------------------------------------------------------------------------------*/
 	CONSTRUCTOR PUBLIC AbstractStrategy ( INPUT piLinesPerCodeBlock AS INTEGER ):
 	    
 		SUPER ().
@@ -65,7 +71,7 @@ CLASS OETools.cpd.Strategy.AbstractStrategy:
 	END CONSTRUCTOR.
 
 	/*------------------------------------------------------------------------------
-	 Purpose:
+	 Purpose: Default implementation of code block comparison
 	 Notes:
 	------------------------------------------------------------------------------*/
 	METHOD PUBLIC LOGICAL Compare(  ):
@@ -75,7 +81,7 @@ CLASS OETools.cpd.Strategy.AbstractStrategy:
 	END METHOD.
 
 	/*------------------------------------------------------------------------------
-	 Purpose:
+	 Purpose: Checks for common lines that should be ignored
 	 Notes:
 	------------------------------------------------------------------------------*/
 
@@ -124,7 +130,7 @@ CLASS OETools.cpd.Strategy.AbstractStrategy:
     END METHOD.
 
 	/*------------------------------------------------------------------------------
-	 Purpose:
+	 Purpose: Processes the contents of a FileList
 	 Notes:
 	------------------------------------------------------------------------------*/
 	METHOD PUBLIC VOID ProcessFileList( INPUT poFileList AS OETools.cpd.File.FileList ):
@@ -141,7 +147,7 @@ CLASS OETools.cpd.Strategy.AbstractStrategy:
 	END METHOD.
 
 	/*------------------------------------------------------------------------------
-	 Purpose:
+	 Purpose: Default implementation of a code report
 	 Notes:
 	------------------------------------------------------------------------------*/
 	METHOD PUBLIC LOGICAL Report( INPUT poReporter AS OETools.cpd.Reporter.AbstractReporter ):

@@ -19,6 +19,7 @@ ROUTINE-LEVEL ON ERROR UNDO, THROW.
 
 CLASS OETools.cpd.Strategy.DefaultStrategy INHERITS AbstractStrategy: 
 
+    /* Holds details of lines that should be compared */
     DEFINE PRIVATE TEMP-TABLE ttLine NO-UNDO
     
         FIELD FileName   AS CHARACTER
@@ -27,6 +28,7 @@ CLASS OETools.cpd.Strategy.DefaultStrategy INHERITS AbstractStrategy:
             
             INDEX PriKey IS PRIMARY UNIQUE FileName ASCENDING LineNumber ASCENDING.
 
+    /* Holds full lines of text from files */
     DEFINE PRIVATE TEMP-TABLE ttRawLine NO-UNDO
     
         FIELD FileName   AS CHARACTER
@@ -35,7 +37,7 @@ CLASS OETools.cpd.Strategy.DefaultStrategy INHERITS AbstractStrategy:
             
             INDEX PriKey IS PRIMARY UNIQUE FileName ASCENDING LineNumber ASCENDING.
             
-    
+    /* Holds hashed contents of ttLine records */
     DEFINE PRIVATE TEMP-TABLE ttHash NO-UNDO
     
         FIELD FileName  AS CHARACTER
@@ -49,12 +51,13 @@ CLASS OETools.cpd.Strategy.DefaultStrategy INHERITS AbstractStrategy:
             INDEX HashKey                   HashData ASCENDING
             INDEX RepKey                    Reported ASCENDING.
 
+    /* Holds Hash object to be used in algorithm */
     DEFINE PROTECTED PROPERTY Hash AS OETools.cpd.Hash.AbstractHash NO-UNDO 
     GET.
     SET. 
 
 	/*------------------------------------------------------------------------------
-	 Purpose:
+	 Purpose: Default class constructor
 	 Notes:
 	------------------------------------------------------------------------------*/
     CONSTRUCTOR PUBLIC DefaultStrategy ( ):
@@ -65,6 +68,10 @@ CLASS OETools.cpd.Strategy.DefaultStrategy INHERITS AbstractStrategy:
         
     END CONSTRUCTOR.
     
+    /*------------------------------------------------------------------------------
+     Purpose: Class Constructor which allows creator to set lines per code at creation time
+     Notes:
+    ------------------------------------------------------------------------------*/
 	CONSTRUCTOR PUBLIC DefaultStrategy ( INPUT piLinesPerCodeBlock AS INTEGER ):
 	    
 	    SUPER( INPUT piLinesPerCodeBlock ).
@@ -72,7 +79,12 @@ CLASS OETools.cpd.Strategy.DefaultStrategy INHERITS AbstractStrategy:
 	    CreateDefaultHash().
 	    
 	END CONSTRUCTOR.
-		
+	
+
+    /*------------------------------------------------------------------------------
+     Purpose: Class Constructor which allows creator to set lines per code, and Hash object at creation time
+     Notes:
+    ------------------------------------------------------------------------------*/	
 	CONSTRUCTOR PUBLIC DefaultStrategy ( INPUT poHash AS OETools.cpd.Hash.AbstractHash, INPUT piLinesPerCodeBlock AS INTEGER ):
 	    
 		SUPER (piLinesPerCodeBlock).
@@ -82,7 +94,7 @@ CLASS OETools.cpd.Strategy.DefaultStrategy INHERITS AbstractStrategy:
 	END CONSTRUCTOR.
 
     /*------------------------------------------------------------------------------
-     Purpose:
+     Purpose: Compares hashed code blocks to each other
      Notes:
     ------------------------------------------------------------------------------*/
     METHOD PUBLIC OVERRIDE LOGICAL Compare(  ):
@@ -160,10 +172,9 @@ CLASS OETools.cpd.Strategy.DefaultStrategy INHERITS AbstractStrategy:
     END METHOD.
 
 	/*------------------------------------------------------------------------------
-	 Purpose:
+	 Purpose: Creates a default Hash object
 	 Notes:
 	------------------------------------------------------------------------------*/
-
 	METHOD PROTECTED VOID CreateDefaultHash(  ):
 		
 		ASSIGN Hash = NEW OETools.cpd.Hash.DefaultHash().
@@ -268,7 +279,7 @@ CLASS OETools.cpd.Strategy.DefaultStrategy INHERITS AbstractStrategy:
     END METHOD.
 
     /*------------------------------------------------------------------------------
-     Purpose:
+     Purpose: Report data through Reporter
      Notes:
     ------------------------------------------------------------------------------*/
     METHOD PUBLIC OVERRIDE LOGICAL Report( INPUT poReporter AS OETools.cpd.Reporter.AbstractReporter ):

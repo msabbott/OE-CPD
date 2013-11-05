@@ -16,10 +16,9 @@ ROUTINE-LEVEL ON ERROR UNDO, THROW.
 
 CLASS OETools.cpd.Hash.DefaultHash INHERITS AbstractHash: 
 	/*------------------------------------------------------------------------------
-	 Purpose:
+	 Purpose: Default class constructor
 	 Notes:
 	------------------------------------------------------------------------------*/
-		
 	CONSTRUCTOR PUBLIC DefaultHash (  ):
 		SUPER ().
 		
@@ -27,7 +26,7 @@ CLASS OETools.cpd.Hash.DefaultHash INHERITS AbstractHash:
 	
 
 	/*------------------------------------------------------------------------------
-	 Purpose: Hashes data
+	 Purpose: Hashes data using OpenEdge ENCODE function
 	 Notes:
 	------------------------------------------------------------------------------*/
 	METHOD PUBLIC OVERRIDE CHARACTER Hash( INPUT pcData AS CHARACTER ):

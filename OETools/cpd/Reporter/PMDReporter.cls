@@ -17,19 +17,19 @@ ROUTINE-LEVEL ON ERROR UNDO, THROW.
 CLASS OETools.cpd.Reporter.PMDReporter INHERITS AbstractXMLReporter:  
     
 	/*------------------------------------------------------------------------------
-	 Purpose:
+	 Purpose: Default class contrstructor
 	 Notes:
 	------------------------------------------------------------------------------*/
-		
 	CONSTRUCTOR PUBLIC PMDReporter ( INPUT cFileName AS CHARACTER ):
         SUPER (cFileName).
         
+        /* Set root element to PMD-CPD standard */
         ASSIGN RootElement = "pmd-cpd".
         
     END CONSTRUCTOR.
 
     /*------------------------------------------------------------------------------
-     Purpose:
+     Purpose: Writes block of copied code in PMD format
      Notes:
     ------------------------------------------------------------------------------*/
     METHOD PUBLIC OVERRIDE LOGICAL WriteBlock( INPUT pcFileNameOne AS CHARACTER, INPUT piStartLineOne AS INTEGER, INPUT piEndLineOne AS INTEGER, 
