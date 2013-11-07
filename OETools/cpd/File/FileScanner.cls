@@ -125,6 +125,26 @@ CLASS OETools.cpd.File.FileScanner:
         RETURN TRUE.
 
     END METHOD.
-	
+
+	/*------------------------------------------------------------------------------
+	 Purpose: Scans a directory for common Progress file extensions.
+	 Notes:
+	------------------------------------------------------------------------------*/
+	METHOD PUBLIC LOGICAL ScanDirectoryForCommonProgress( INPUT pcDirectory AS CHARACTER ):
+	    
+	    DEFINE VARIABLE cList      AS CHARACTER NO-UNDO INITIAL "p|i|cls|w".
+	    DEFINE VARIABLE iLoop      AS INTEGER NO-UNDO.
+	    DEFINE VARIABLE cExtension AS CHARACTER NO-UNDO.
+
+        DO iLoop = 1 TO NUM-ENTRIES(cList, "|"):
+            
+            ASSIGN cExtension = "*~~." + ENTRY(iLoop, cList, "|").
+		
+    		/* Scan, returning false if an error occurred */
+    		IF(NOT ScanDirectory(INPUT pcDirectory, INPUT cExtension)) THEN RETURN FALSE.
+    		
+        END.
+
+	END METHOD.	
 
 END CLASS.
