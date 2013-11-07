@@ -146,14 +146,24 @@ CLASS OETools.cpd.Strategy.AbstractStrategy:
 
 	END METHOD.
 
-	/*------------------------------------------------------------------------------
-	 Purpose: Default implementation of a code report
-	 Notes:
-	------------------------------------------------------------------------------*/
-	METHOD PUBLIC LOGICAL Report( INPUT poReporter AS OETools.cpd.Reporter.AbstractReporter ):
+    /*------------------------------------------------------------------------------
+     Purpose: Report data through Reporter
+     Notes:
+    ------------------------------------------------------------------------------*/
+    METHOD PUBLIC LOGICAL Report( INPUT poReporter AS OETools.cpd.Reporter.AbstractReporter ):
         
-        RETURN FALSE.
+        poReporter:Initialise().
+        
+        FOR EACH ttBlock NO-LOCK:
+                       
+            poReporter:WriteBlock(ttBlock.FileNameOne, ttBlock.StartLineOne, ttBlock.EndLineOne,
+                                  ttBlock.FileNameTwo, ttBlock.StartLineTwo, ttBlock.EndLineTwo,
+                                  ttBlock.Data).
+            
+        END.
+        
+        poReporter:ShutDown().
 
-	END METHOD.
+    END METHOD.
 
 END CLASS.
