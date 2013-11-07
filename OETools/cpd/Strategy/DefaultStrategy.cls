@@ -19,23 +19,16 @@ ROUTINE-LEVEL ON ERROR UNDO, THROW.
 
 CLASS OETools.cpd.Strategy.DefaultStrategy INHERITS AbstractStrategy: 
 
-    /* Holds details of lines that should be compared */
-    DEFINE PRIVATE TEMP-TABLE ttLine NO-UNDO
-    
-        FIELD FileName   AS CHARACTER
-        FIELD LineNumber AS INTEGER
-        FIELD Data       AS CHARACTER
-            
-            INDEX PriKey IS PRIMARY UNIQUE FileName ASCENDING LineNumber ASCENDING.
-
     /* Holds full lines of text from files */
     DEFINE PRIVATE TEMP-TABLE ttRawLine NO-UNDO
     
         FIELD FileName   AS CHARACTER
         FIELD LineNumber AS INTEGER
         FIELD Data       AS CHARACTER
+        FIELD UseLine    AS LOGICAL
             
-            INDEX PriKey IS PRIMARY UNIQUE FileName ASCENDING LineNumber ASCENDING.
+            INDEX PriKey IS PRIMARY UNIQUE FileName ASCENDING LineNumber ASCENDING
+            INDEX UseKey                   FileName ASCENDING UseLine    ASCENDING LineNumber ASCENDING.
             
     /* Holds hashed contents of ttLine records */
     DEFINE PRIVATE TEMP-TABLE ttHash NO-UNDO
@@ -98,11 +91,9 @@ CLASS OETools.cpd.Strategy.DefaultStrategy INHERITS AbstractStrategy:
      Notes:
     ------------------------------------------------------------------------------*/
     METHOD PUBLIC OVERRIDE LOGICAL Compare(  ):
-        
+                
         DEFINE BUFFER ttHash  FOR ttHash.
         DEFINE BUFFER bttHash FOR ttHash.
-        DEFINE BUFFER ttLine  FOR ttLine.
-        DEFINE BUFFER bttLine FOR ttLine.
         
         FOR EACH ttHash EXCLUSIVE-LOCK
            WHERE ttHash.Reported = FALSE,
@@ -113,16 +104,7 @@ CLASS OETools.cpd.Strategy.DefaultStrategy INHERITS AbstractStrategy:
              AND (  (    bttHash.FileName  EQ ttHash.FileName
                      AND bttHash.StartLine NE ttHash.StartLine)
                   OR(bttHash.FileName NE ttHash.FileName)
-                 ),
-                 
-           FIRST ttLine NO-LOCK
-           WHERE ttLine.FileName   = ttHash.FileName
-             AND ttLine.LineNumber = ttHash.StartLine,
-                 
-           FIRST bttLine NO-LOCK
-           WHERE bttLine.FileName   = bttHash.FileName
-             AND bttLine.LineNumber = bttHash.StartLine
-           :
+                 ):
                
             ASSIGN ttHash.Reported  = TRUE
                    bttHash.Reported = TRUE.
@@ -193,7 +175,7 @@ CLASS OETools.cpd.Strategy.DefaultStrategy INHERITS AbstractStrategy:
         DEFINE VARIABLE iInnerLoop  AS INTEGER   NO-UNDO.
         DEFINE VARIABLE iMaxLine    AS INTEGER   NO-UNDO.
         
-        DEFINE BUFFER bttLine FOR ttLine.
+        DEFINE BUFFER bttRawLine FOR ttRawLine.
         
         /* If file has already been processed, then return false */
         IF CAN-FIND(FIRST ttRawLine NO-LOCK
@@ -215,7 +197,8 @@ CLASS OETools.cpd.Strategy.DefaultStrategy INHERITS AbstractStrategy:
             
             ASSIGN ttRawLine.FileName   = pcFileName
                    ttRawLine.LineNumber = iLineNumber
-                   ttRawLine.Data       = cLine.
+                   ttRawLine.Data       = cLine
+                   ttRawLine.UseLine    = FALSE. /* Assume that line is not useable */
             
             /* If this is a common line to exclude, then ignore it */
             IF ExcludeIfCommon(cLine) THEN NEXT FileLoop.
@@ -227,12 +210,8 @@ CLASS OETools.cpd.Strategy.DefaultStrategy INHERITS AbstractStrategy:
             /* Ignore blank lines */
             IF cLine = ? OR cLine = "" THEN NEXT FileLoop.
             
-            /* Create record */
-            CREATE ttLine.
-            
-            ASSIGN ttLine.FileName   = pcFileName
-                   ttLine.LineNumber = iLineNumber
-                   ttLine.Data       = cLine.
+            /* Line has passed tests */
+            ASSIGN ttRawLine.UseLine = TRUE.
             
         END.    
         
@@ -240,26 +219,28 @@ CLASS OETools.cpd.Strategy.DefaultStrategy INHERITS AbstractStrategy:
         INPUT CLOSE.           
         
         /* Loop through the data, generating a hash for each "LinesPerCodeBlock" number of lines */
-        FOR EACH ttLine NO-LOCK
-           WHERE ttLine.FileName = pcFileName
-              BY ttLine.FileName
-              BY ttLine.LineNumber:
+        FOR EACH ttRawLine NO-LOCK
+           WHERE ttRawLine.FileName = pcFileName
+             AND ttRawLine.UseLine  = TRUE
+              /*BY ttRawLine.FileName*/
+              BY ttRawLine.LineNumber:
                   
-            ASSIGN cData    = ttLine.Data
-                   iMaxLine = ttLine.LineNumber.
+            ASSIGN cData    = ttRawLine.Data
+                   iMaxLine = ttRawLine.LineNumber.
             
             /* Find the next "LinesPerCodeBlock" after this line */
             DO iInnerLoop = 1 TO LinesPerCodeBlock - 1:
                 
-                FIND FIRST bttLine
-                     WHERE bttLine.FileName   = pcFileName
-                       AND bttLine.LineNumber = ttLine.LineNumber + iInnerLoop
+                FIND FIRST bttRawLine
+                     WHERE bttRawLine.FileName   = pcFileName
+                       AND bttRawLine.UseLine    = TRUE
+                       AND bttRawLine.LineNumber = ttRawLine.LineNumber + iInnerLoop
                            NO-LOCK NO-ERROR.
                            
-                IF AVAILABLE bttLine THEN
+                IF AVAILABLE bttRawLine THEN
                 DO:
-                    ASSIGN cData    = cData + bttLine.Data
-                           iMaxLine = bttLine.LineNumber.
+                    ASSIGN cData    = cData + REPLACE(TRIM(bttRawLine.Data), " ", "")
+                           iMaxLine = bttRawLine.LineNumber.
                 END.
                 
             END.
@@ -267,8 +248,8 @@ CLASS OETools.cpd.Strategy.DefaultStrategy INHERITS AbstractStrategy:
             /* Create ttHash record */
             CREATE ttHash.
             
-            ASSIGN ttHash.FileName  = ttLine.FileName
-                   ttHash.StartLine = ttLine.LineNumber
+            ASSIGN ttHash.FileName  = ttRawLine.FileName
+                   ttHash.StartLine = ttRawLine.LineNumber
                    ttHash.EndLine   = iMaxLine
                    ttHash.HashData  = Hash:Hash(cData).
              
