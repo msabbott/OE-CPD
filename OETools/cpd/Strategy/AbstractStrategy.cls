@@ -98,21 +98,27 @@ CLASS OETools.cpd.Strategy.AbstractStrategy:
         OR pcLine BEGINS "/* *************************  Create Window  ************************** */"
         OR pcLine BEGINS "/* ************************* Included-Libraries *********************** */"
         OR pcLine BEGINS "/* ************************  Main Code Block  *********************** */"
-        OR pcLine BEGINS "/*------------------------------------------------------------------------------"
         OR pcLine BEGINS "  Purpose:"
         OR pcLine BEGINS "  Parameters:"
         OR pcLine BEGINS "  Notes:"
-        OR pcLine BEGINS "------------------------------------------------------------------------------*/"
+        OR pcLine BEGINS "    Notes       :"
+        OR TRIM(pcLine) MATCHES "/~~*--*--"
+        OR TRIM(pcLine) MATCHES "--*--~~*/"
         OR pcLine MATCHES "*src/web2/wrap-cgi.i*"
         OR pcLine BEGINS "/* DESIGN Window definition (used by the UIB)"
         OR pcLine BEGINS "CREATE WINDOW Procedure ASSIGN"
         OR pcLine BEGINS "/* END WINDOW DEFINITION */"
+        OR pcLine BEGINS "USING Progress.Lang.*."
+        OR pcLine BEGINS "ROUTINE-LEVEL ON ERROR UNDO, THROW."
         
         /* Ignore common code lines */
         OR TRIM(pcLine) EQ "END."
         OR TRIM(pcLine) EQ "/*"
         OR TRIM(pcLine) EQ "*/"
-        OR pcLine BEGINS "END PROCEDURE."
+        OR TRIM(pcLine) BEGINS "SUPER ()."
+        OR TRIM(pcLine) BEGINS "END PROCEDURE."
+        OR TRIM(pcLine) BEGINS "END METHOD."
+        OR TRIM(pcLine) BEGINS "END FUNCTION."
             THEN RETURN TRUE.
             
         RETURN FALSE.
