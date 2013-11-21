@@ -233,7 +233,6 @@ CLASS OETools.cpd.Strategy.DefaultStrategy INHERITS AbstractStrategy:
                 
                 FIND FIRST bttRawLine
                      WHERE bttRawLine.FileName   = pcFileName
-                       AND bttRawLine.UseLine    = TRUE
                        AND bttRawLine.LineNumber = ttRawLine.LineNumber + iInnerLoop
                            NO-LOCK NO-ERROR.
                            
