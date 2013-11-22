@@ -20,6 +20,12 @@ CLASS OETools.cpd.Strategy.AbstractStrategy:
     
     {OETools\cpd\File\ttFile.i PROTECTED}
     {OETools\cpd\File\dsFile.i PROTECTED}
+    
+    {OETools\cpd\Strategy\ttFragment.i PROTECTED}
+    {OETools\cpd\Strategy\dsFragment.i PROTECTED}
+    
+    {OETools\cpd\Strategy\ttFragmentFile.i PROTECTED}
+    {OETools\cpd\Strategy\dsFragmentFile.i PROTECTED}
 
     /* Defines number of lines to group into one scanned code block */
 	DEFINE PROTECTED PROPERTY LinesPerCodeBlock AS INTEGER NO-UNDO 
@@ -160,13 +166,7 @@ CLASS OETools.cpd.Strategy.AbstractStrategy:
         
         poReporter:Initialise().
         
-        FOR EACH ttBlock NO-LOCK:
-                       
-            poReporter:WriteBlock(ttBlock.FileNameOne, ttBlock.StartLineOne, ttBlock.EndLineOne,
-                                  ttBlock.FileNameTwo, ttBlock.StartLineTwo, ttBlock.EndLineTwo,
-                                  ttBlock.Data).
-            
-        END.
+        poReporter:WriteReport(INPUT DATASET dsFragment, INPUT DATASET dsFragmentFile).
         
         poReporter:ShutDown().
 
