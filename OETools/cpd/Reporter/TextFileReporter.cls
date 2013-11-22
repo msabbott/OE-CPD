@@ -69,7 +69,48 @@ CLASS OETools.cpd.Reporter.TextFileReporter INHERITS AbstractReporter:
                         " Lines: " piStartLineTwo "-" piEndLineTwo SKIP
                         pcCodeBlock SKIP(3).
 
-    END METHOD.    
+    END METHOD.   
+
+    /*------------------------------------------------------------------------------
+     Purpose: Write fragments and linked files to report document
+     Notes:
+    ------------------------------------------------------------------------------*/
+    METHOD PUBLIC OVERRIDE LOGICAL WriteReport(INPUT DATASET dsFragment, INPUT DATASET dsFragmentFile):
+        
+        FOR EACH ttFragment NO-LOCK
+              BY ttFragment.FragmentID:
+            
+            /* Output Fragment header */
+            PUT STREAM sOutput UNFORMATTED
+                (IF ttFragment.FragmentID GT 1 THEN "****************************************************" ELSE "") SKIP
+                "Fragment Number: " ttFragment.FragmentID SKIP.
+
+            /* Output Files that match the fragment */                
+            FOR EACH ttFragmentFile NO-LOCK
+               WHERE ttFragmentFile.FragmentID = ttFragment.FragmentID
+                  BY ttFragmentFile.FragmentID 
+                  BY ttFragmentFile.FileName 
+                  BY ttFragmentFile.StartLine 
+                  BY ttFragmentFile.EndLine:
+                      
+                PUT STREAM sOutput UNFORMATTED
+                    "File: " ttFragmentFile.FileName
+                    " Lines: " ttFragmentFile.StartLine "-" ttFragmentFile.EndLine SKIP.                                          
+                      
+            END.
+            
+            /* Output Code */
+            PUT STREAM sOutput UNFORMATTED
+                SKIP
+                ttFragment.Data
+                SKIP.  
+        END.
+        
+        RETURN TRUE.
+
+    END METHOD.
+    
+        
     
 
 END CLASS.

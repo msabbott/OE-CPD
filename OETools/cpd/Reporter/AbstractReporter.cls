@@ -15,6 +15,14 @@ ROUTINE-LEVEL ON ERROR UNDO, THROW.
 
 CLASS OETools.cpd.Reporter.AbstractReporter:  
     
+    /* Temp-table and Dataset definitions for Code Fragments */
+    {OETools\cpd\Strategy\ttFragment.i PROTECTED}
+    {OETools\cpd\Strategy\dsFragment.i PROTECTED}
+    
+    /* Temp-table and Dataset definitions for Files with Matching Code Fragments */
+    {OETools\cpd\Strategy\ttFragmentFile.i PROTECTED}
+    {OETools\cpd\Strategy\dsFragmentFile.i PROTECTED}
+    
     /*------------------------------------------------------------------------------
      Purpose: Default class contrstructor
      Notes:
@@ -55,5 +63,17 @@ CLASS OETools.cpd.Reporter.AbstractReporter:
 		RETURN FALSE.
 
 	END METHOD.
+
+    /*------------------------------------------------------------------------------
+     Purpose: Write fragments and linked files to report document
+     Notes:
+    ------------------------------------------------------------------------------*/
+    METHOD PUBLIC LOGICAL WriteReport(INPUT DATASET dsFragment, INPUT DATASET dsFragmentFile):
+        
+        RETURN FALSE.
+
+    END METHOD.
+	
+	
 
 END CLASS.
