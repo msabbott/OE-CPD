@@ -31,26 +31,6 @@ CLASS OETools.cpd.Strategy.AbstractStrategy:
 	DEFINE PROTECTED PROPERTY LinesPerCodeBlock AS INTEGER NO-UNDO 
 	GET.
 	SET. 
-	
-	/* Defines two similar code blocks */
-	DEFINE PROTECTED TEMP-TABLE ttBlock NO-UNDO
-	   
-	   FIELD FileNameOne  AS CHARACTER
-	   FIELD StartLineOne AS INTEGER
-	   FIELD EndLineOne   AS INTEGER
-	   
-	   FIELD FileNameTwo  AS CHARACTER
-       FIELD StartLineTwo AS INTEGER
-       FIELD EndLineTwo   AS INTEGER
-       
-       FIELD Data         AS CHARACTER
-       
-        INDEX PriKey IS PRIMARY UNIQUE FileNameOne  ASCENDING
-                                       StartLineOne ASCENDING
-                                       EndLineOne   ASCENDING
-                                       FileNameTwo  ASCENDING
-                                       StartLineTwo ASCENDING
-                                       EndLineTwo   ASCENDING.
 
 	/*------------------------------------------------------------------------------
 	 Purpose: Default Class Constructor

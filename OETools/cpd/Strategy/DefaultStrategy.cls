@@ -178,33 +178,7 @@ CLASS OETools.cpd.Strategy.DefaultStrategy INHERITS AbstractStrategy:
                        ttFragment.Data            = ""
                        ttFragmentFile.FragmentID  = ttFragment.FragmentID
                        bttFragmentFile.FragmentID = ttFragment.FragmentID.
-            END.
-            
-            FIND ttBlock
-                 WHERE ttBlock.FileNameOne  = ttHash.FileName
-                   AND ttBlock.StartLineOne <= ttHash.StartLine
-                   AND ttBlock.EndLineOne   >= ttHash.StartLine
-                   AND ttBlock.FileNameTwo  = bttHash.FileName
-                   AND ttBlock.StartLineTwo <= bttHash.StartLine
-                   AND ttBlock.EndLineTwo   >= bttHash.StartLine
-                       EXCLUSIVE-LOCK NO-ERROR.
-                       
-            IF AVAILABLE ttBlock THEN
-            DO:
-                ASSIGN ttBlock.EndLineOne = ttHash.EndLine
-                       ttBlock.EndLineTwo = bttHash.EndLine.
-            END.
-            ELSE
-            DO:
-                CREATE ttBlock.
-                
-                ASSIGN ttBlock.FileNameOne  = ttHash.FileName
-                       ttBlock.StartLineOne = ttHash.StartLine
-                       ttBlock.EndLineOne   = ttHash.EndLine
-                       ttBlock.FileNameTwo  = bttHash.FileName
-                       ttBlock.StartLineTwo = bttHash.StartLine
-                       ttBlock.EndLineTwo   = bttHash.EndLine.
-            END.                    
+            END.                 
             
         END.
         
@@ -221,20 +195,6 @@ CLASS OETools.cpd.Strategy.DefaultStrategy INHERITS AbstractStrategy:
                   
             ASSIGN ttFragment.Data = ttFragment.Data + "~n"
                                    + ttRawLine.Data.
-                  
-        END.
-        
-        /* Loop through the matched blocks, and build up the output */
-        FOR EACH ttBlock EXCLUSIVE-LOCK,
-            EACH ttRawLine NO-LOCK
-           WHERE ttRawLine.FileName = ttBlock.FileNameOne
-             AND ttRawLine.LineNumber >= ttBlock.StartLineOne
-             AND ttRawLine.LineNumber <= ttBlock.EndLineOne
-              BY ttRawLine.FileName
-              BY ttRawLine.LineNumber:
-                  
-            ASSIGN ttBlock.Data = ttBlock.Data + "~n"
-                                + ttRawLine.Data.                  
                   
         END.
 
