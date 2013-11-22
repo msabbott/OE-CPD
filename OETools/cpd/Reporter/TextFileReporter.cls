@@ -25,7 +25,7 @@ CLASS OETools.cpd.Reporter.TextFileReporter INHERITS AbstractReporter:
 	SET. 
 
 	/*------------------------------------------------------------------------------
-	 Purpose: Default Class Constructor
+	 Purpose: Default TextReporter Class Constructor
 	 Notes:
 	------------------------------------------------------------------------------*/
 	CONSTRUCTOR PUBLIC TextFileReporter ( INPUT cFileName AS CHARACTER ):

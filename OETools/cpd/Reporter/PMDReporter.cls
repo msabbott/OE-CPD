@@ -5,7 +5,7 @@
     Syntax      : 
     Description : 
     Author(s)   : Mark Abbott
-    Created     : Thu Oct 31 21:26:38 GMT 2013
+    Created     : Thu Oct 31 21:26:39 GMT 2013
     Notes       : 
   ----------------------------------------------------------------------*/
 
@@ -17,7 +17,7 @@ ROUTINE-LEVEL ON ERROR UNDO, THROW.
 CLASS OETools.cpd.Reporter.PMDReporter INHERITS AbstractXMLReporter:  
     
 	/*------------------------------------------------------------------------------
-	 Purpose: Default class contrstructor
+	 Purpose: Default PMDReporter class constructor
 	 Notes:
 	------------------------------------------------------------------------------*/
 	CONSTRUCTOR PUBLIC PMDReporter ( INPUT cFileName AS CHARACTER ):

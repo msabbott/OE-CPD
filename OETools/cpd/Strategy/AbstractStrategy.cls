@@ -33,7 +33,7 @@ CLASS OETools.cpd.Strategy.AbstractStrategy:
 	SET. 
 
 	/*------------------------------------------------------------------------------
-	 Purpose: Default Class Constructor
+	 Purpose: Default Strategy Class Constructor
 	 Notes:
 	------------------------------------------------------------------------------*/
 	CONSTRUCTOR PUBLIC AbstractStrategy (  ):
