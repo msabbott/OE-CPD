@@ -53,23 +53,7 @@ CLASS OETools.cpd.Reporter.TextFileReporter INHERITS AbstractReporter:
 		
         OUTPUT STREAM sOutput CLOSE.
         
-	END METHOD.    
-
-    /*------------------------------------------------------------------------------
-     Purpose: Write code block to report document
-     Notes:
-    ------------------------------------------------------------------------------*/
-    METHOD PUBLIC OVERRIDE LOGICAL WriteBlock( INPUT pcFileNameOne AS CHARACTER, INPUT piStartLineOne AS INTEGER, INPUT piEndLineOne AS INTEGER, 
-                                               INPUT pcFileNameTwo AS CHARACTER, INPUT piStartLineTwo AS INTEGER, INPUT piEndLineTwo AS INTEGER,
-                                               INPUT pcCodeBlock   AS CHARACTER):
-        
-        PUT STREAM sOutput UNFORMATTED "File: " pcFileNameOne
-                        " Lines: " piStartLineOne "-" piEndLineOne SKIP
-                        "File: " pcFileNameTwo
-                        " Lines: " piStartLineTwo "-" piEndLineTwo SKIP
-                        pcCodeBlock SKIP(3).
-
-    END METHOD.   
+	END METHOD.
 
     /*------------------------------------------------------------------------------
      Purpose: Write fragments and linked files to report document

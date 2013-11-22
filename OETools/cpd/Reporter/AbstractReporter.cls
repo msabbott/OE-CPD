@@ -50,19 +50,7 @@ CLASS OETools.cpd.Reporter.AbstractReporter:
         
         RETURN FALSE.
         
-    END METHOD.    
-
-	/*------------------------------------------------------------------------------
-	 Purpose: Writes a single code block to the report document
-	 Notes:
-	------------------------------------------------------------------------------*/
-	METHOD PUBLIC LOGICAL WriteBlock( INPUT pcFileNameOne AS CHARACTER, INPUT piStartLineOne AS INTEGER, INPUT piEndLineOne AS INTEGER, 
-	                                  INPUT pcFileNameTwo AS CHARACTER, INPUT piStartLineTwo AS INTEGER, INPUT piEndLineTwo AS INTEGER,
-	                                  INPUT pcCodeBlock   AS CHARACTER):
-		
-		RETURN FALSE.
-
-	END METHOD.
+    END METHOD.
 
     /*------------------------------------------------------------------------------
      Purpose: Write fragments and linked files to report document
