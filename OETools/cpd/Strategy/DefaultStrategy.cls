@@ -95,6 +95,12 @@ CLASS OETools.cpd.Strategy.DefaultStrategy INHERITS AbstractStrategy:
         DEFINE BUFFER ttHash  FOR ttHash.
         DEFINE BUFFER bttHash FOR ttHash.
         
+        DEFINE BUFFER ttFragment      FOR ttFragment.
+        DEFINE BUFFER bttFragment     FOR ttFragment.
+        DEFINE BUFFER ttFragmentFile  FOR ttFragmentFile.
+        DEFINE BUFFER bttFragmentFile FOR ttFragmentFile.
+        
+        
         FOR EACH ttHash EXCLUSIVE-LOCK
            WHERE ttHash.Reported = FALSE,
         
@@ -109,6 +115,71 @@ CLASS OETools.cpd.Strategy.DefaultStrategy INHERITS AbstractStrategy:
             ASSIGN ttHash.Reported  = TRUE
                    bttHash.Reported = TRUE.
                    
+            /* Find a fragment record for the Hash being processed */
+            FIND ttFragmentFile
+                 WHERE ttFragmentFile.FileName  EQ ttHash.FileName
+                   AND ttFragmentFile.StartLine LE ttHash.StartLine
+                   AND ttFragmentFile.EndLine   GE ttHash.StartLine
+                       EXCLUSIVE-LOCK NO-ERROR.
+                       
+            IF NOT AVAILABLE ttFragmentFile THEN
+            DO:
+                CREATE ttFragmentFile.
+                
+                ASSIGN ttFragmentFile.FragmentID = ?
+                       ttFragmentFile.FileName   = ttHash.FileName
+                       ttFragmentFile.StartLine  = ttHash.StartLine
+                       ttFragmentFile.EndLine    = ttHash.EndLine.
+            END.
+            ELSE
+            DO:
+                ASSIGN ttFragmentFile.EndLine = ttHash.EndLine.
+            END.
+            
+            /* Find a second fragment for the other hash found */
+            FIND bttFragmentFile
+                 WHERE bttFragmentFile.FileName  EQ bttHash.FileName
+                   AND bttFragmentFile.StartLine LE bttHash.StartLine
+                   AND bttFragmentFile.EndLine   GE bttHash.StartLine
+                       EXCLUSIVE-LOCK NO-ERROR.
+                       
+            IF NOT AVAILABLE bttFragmentFile THEN
+            DO:
+                CREATE bttFragmentFile.
+                
+                ASSIGN bttFragmentFile.FragmentID = ?
+                       bttFragmentFile.FileName   = bttHash.FileName
+                       bttFragmentFile.StartLine  = bttHash.StartLine
+                       bttFragmentFile.EndLine    = bttHash.EndLine.
+            END.
+            ELSE
+            DO:
+                ASSIGN bttFragmentFile.EndLine = bttHash.EndLine.
+            END.
+            
+            /* Harmonise the Fragment ID, or create a new Fragment if required */
+            IF ttFragmentFile.FragmentID NE ? AND bttFragmentFile.FragmentID EQ ? THEN
+            DO:
+                ASSIGN bttFragmentFile.FragmentID = ttFragmentFile.FragmentID.
+            END.
+            ELSE 
+            IF ttFragmentFile.FragmentID EQ ? AND bttFragmentFile.FragmentID NE ? THEN
+            DO:
+                ASSIGN ttFragmentFile.FragmentID = bttFragmentFile.FragmentID.
+            END.
+            ELSE
+            IF ttFragmentFile.FragmentID EQ ? AND bttFragmentFile.FragmentID EQ ? THEN
+            DO:
+                FIND LAST bttFragment NO-LOCK NO-ERROR.
+                
+                CREATE ttFragment.
+                
+                ASSIGN ttFragment.FragmentID      = (IF AVAILABLE bttFragment THEN bttFragment.FragmentID + 1 ELSE 1)
+                       ttFragment.Data            = ""
+                       ttFragmentFile.FragmentID  = ttFragment.FragmentID
+                       bttFragmentFile.FragmentID = ttFragment.FragmentID.
+            END.
+            
             FIND ttBlock
                  WHERE ttBlock.FileNameOne  = ttHash.FileName
                    AND ttBlock.StartLineOne <= ttHash.StartLine
@@ -135,6 +206,22 @@ CLASS OETools.cpd.Strategy.DefaultStrategy INHERITS AbstractStrategy:
                        ttBlock.EndLineTwo   = bttHash.EndLine.
             END.                    
             
+        END.
+        
+        /* Loop through the fragments, and build up the code blocks */
+        FOR EACH ttFragment EXCLUSIVE-LOCK,
+           FIRST ttFragmentFile NO-LOCK
+           WHERE ttFragmentFile.FragmentID = ttFragment.FragmentID,
+            EACH ttRawLine NO-LOCK
+           WHERE ttRawLine.FileName   EQ ttFragmentFile.FileName
+             AND ttRawLine.LineNumber GE ttFragmentFile.StartLine
+             AND ttRawLine.LineNumber LE ttFragmentFile.EndLine
+              BY ttRawLine.FileName
+              BY ttRawLine.LineNumber:
+                  
+            ASSIGN ttFragment.Data = ttFragment.Data + "~n"
+                                   + ttRawLine.Data.
+                  
         END.
         
         /* Loop through the matched blocks, and build up the output */
